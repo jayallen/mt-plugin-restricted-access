@@ -1,0 +1,72 @@
+<!-- RestrictedAccess: $Id$ -->
+
+<h3><__trans phrase="Administrative interface access"></h3>
+
+<script type="text/javascript" charset="utf-8">
+    function raRestrictCMSPrefsToggle(val) {
+        //alert(val);
+        if (val != 0) {
+            show('restrict_cms_prefs');
+            show('restrict_cms_prefs');
+            show('restrict_cms_prefs');
+            if (val == 'users') {
+                show('restrict_cms_userprefs')
+                show('restrict_cms_userprefs')
+                show('restrict_cms_userprefs')
+            } else {
+                hide('restrict_cms_userprefs');
+            }
+        } else {
+            hide('restrict_cms_prefs');
+        }
+    }
+</script>
+
+<mtapp:setting
+    id="restrict_cms"
+    content_class="field-content-text"
+    label="<__trans phrase="Allowed:">"
+    show_label="1"
+    hint="<__trans phrase="RESTRICTEDACCESS_MODE_DESCRIPTION">"
+    show_hint="1">
+        <ul>
+            <li>
+                <select id="restrict_cms" name="restrict_cms" onchange="raRestrictCMSPrefsToggle(this.value)">
+                    <option value="0"<mt:If name="restrict_cms_0"> selected="selected"</mt:If>><__trans phrase="All users"></option>
+                    <option value="self"<mt:If name="restrict_cms_self"> selected="selected"</mt:If>><__trans phrase="You (single-user mode)"></option>
+                    <option value="sysadmin"<mt:If name="restrict_cms_sysadmin"> selected="selected"</mt:If>><__trans phrase="System administrators only"></option>
+                    <option value="users"<mt:If name="restrict_cms_users">  selected="selected"</mt:If>><__trans phrase="System administrators and selected users..."></option>
+                </select>
+            </li>
+        </ul>
+</mtapp:setting>
+
+<div id="restrict_cms_prefs"<mt:If name="restrict_cms_0"> class="hidden"</mt:If>>
+
+    <div id="restrict_cms_userprefs"<mt:unless name="restrict_cms_users"> class="hidden"</mt:unless>>
+
+        <mtapp:setting
+            id="cms_allowed_users"
+            content_class="field-content-text"
+            label="<__trans phrase="Other users:">"
+            show_label="1"
+            hint="<__trans phrase="ALLOWED_USERS_DESCRIPTION">"
+            show_hint="1">
+                <ul>
+                    <li>
+            			<input type="text" name="cms_allowed_users" id="cms_allowed_users" value="<mt:Var name="cms_allowed_users" escape="html">" size="40" />
+                    </li>
+                </ul>
+        </mtapp:setting>
+    </div>
+
+    <mtapp:setting
+        id="cms_denied_message"
+        content_class="field-content-text"
+        label="<__trans phrase="Deny message:">"
+        show_label="1"
+        hint="<__trans phrase="ACCESS_DENIED_MESSAGE_HINT">"
+        show_hint="1">
+        <textarea name="cms_denied_message" id="cms_denied_message" rows="" cols="" class="full-width short"><mt:Var name="cms_denied_message" escape="html"></textarea>
+    </mtapp:setting>
+</div>

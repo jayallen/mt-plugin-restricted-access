@@ -1,0 +1,41 @@
+<!-- RestrictedAccess: $Id$ -->
+
+<mt:Unless name="mode" eq="cfg_system_users">
+    <h3><__trans phrase="User Registration"></h3>
+</mt:Unless>
+
+<script type="text/javascript" charset="utf-8">
+    function raRegPrefsToggle(val) {
+        if (val != '') {
+            show('reg_allowed_domains_prefs');
+        } else {
+            hide('reg_allowed_domains_prefs');
+        }        
+    }
+</script>
+
+<mtapp:setting
+    id="reg_allowed_domains"
+    content_class="field-content-text"
+    label="<__trans phrase="Restrict to domains:">"
+    show_label="1"
+    hint="<__trans phrase="REG_DOMAIN_DESCRIPTION">"
+    show_hint="1">
+
+    <textarea id="reg_allowed_domains" name="reg_allowed_domains" rows="" cols="" class="full-width short" onblur="raRegPrefsToggle(this.value)" onfocus="raRegPrefsToggle(this.value)" onkeydown="raRegPrefsToggle(this.value)"><mt:var name="reg_allowed_domains" escape="html"></textarea>
+</mtapp:setting>
+
+<div id="reg_allowed_domains_prefs"<mt:Unless name="reg_allowed_domains"> class="hidden"</mt:Unless>>
+
+    <mtapp:setting
+        id="reg_denied_message"
+        content_class="field-content-text"
+        label="<__trans phrase="Deny message:">"
+        show_label="1"
+        hint="<__trans phrase="ACCESS_DENIED_MESSAGE_HINT">"
+        show_hint="1">
+            <textarea name="reg_denied_message" id="reg_denied_message" rows="" cols="" class="full-width short"><mt:Var name="reg_denied_message" escape="html"></textarea>
+    </mtapp:setting>
+
+</div>
+
